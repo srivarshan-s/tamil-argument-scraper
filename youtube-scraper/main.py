@@ -42,4 +42,4 @@ for video in video_list:
 
 df = pd.DataFrame(data, columns=['comment'])
 
-df.to_csv("comments.tsv", sep="\t")
+df.to_csv("youtube_comments.csv", index=False, encoding="utf-8")
