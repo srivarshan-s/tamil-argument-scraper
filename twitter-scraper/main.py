@@ -6,10 +6,10 @@ import pandas as pd
 from utils import close_ntfn_popup
 
 from selenium.webdriver import Chrome
-# from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 
-# from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.chrome import ChromeDriverManager
 
 
 url_df = pd.read_csv("urls.csv")
@@ -19,13 +19,15 @@ main_tweets = url_df["Tweet"]
 
 tweets = []
 
+chrome_service = Service(ChromeDriverManager().install())
+
 for url, topic, main_tweet in zip(urls, topics, main_tweets):
 
     try:
 
         try:
-            # driver = Chrome(service=Service(ChromeDriverManager().install()))
-            driver = Chrome("./chromedriver")
+            driver = Chrome(service=chrome_service)
+            # driver = Chrome("./chromedriver")
             driver.maximize_window()
             driver.get(url)
 
