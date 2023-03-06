@@ -131,3 +131,4 @@ dmypy.json
 # User added files
 .vscode/
 LICENSE.chromedriver
+chromedriver
