@@ -6,10 +6,8 @@ import re
 if __name__ == "__main__":
 
     df = pd.read_csv("tweet_comments.csv")
-    # print(df.head())
 
     user_tags = list(df["Replying to"]) 
-    # print(user_tags)
 
     mention_re = "(^|[^@\w])@(\w{1,15})"
 
@@ -20,16 +18,18 @@ if __name__ == "__main__":
             user_tags.append(tag)
 
     user_tags = np.unique(user_tags)
-    # print(user_tags)
 
     dummy_tags = []
     for idx, tag in enumerate(user_tags):
         dummy_tags.append("@USER_" + str(idx+1))
 
-    # print(dummy_tags)
-
     user_tag_dict = {}
     for tag, dummy in zip(user_tags, dummy_tags):
         user_tag_dict[tag] = dummy
 
-    print(user_tag_dict)
+    new_tweets = list(df["Tweet"])
+    for idx in range(len(new_tweets)):
+        for tag, dummy in user_tag_dict.items():
+            new_tweets[idx] = new_tweets[idx].replace(tag, dummy)
+
+    print(new_tweets)
