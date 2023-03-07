@@ -20,4 +20,16 @@ if __name__ == "__main__":
             user_tags.append(tag)
 
     user_tags = np.unique(user_tags)
-    print(user_tags)
+    # print(user_tags)
+
+    dummy_tags = []
+    for idx, tag in enumerate(user_tags):
+        dummy_tags.append("@USER_" + str(idx+1))
+
+    # print(dummy_tags)
+
+    user_tag_dict = {}
+    for tag, dummy in zip(user_tags, dummy_tags):
+        user_tag_dict[tag] = dummy
+
+    print(user_tag_dict)
