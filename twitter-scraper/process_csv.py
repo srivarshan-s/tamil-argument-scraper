@@ -3,20 +3,17 @@ import numpy as np
 import re
 
 
-if __name__ == "__main__":
+def replace_tags(dataframe, columns):
 
-    df = pd.read_csv("tweet_comments.csv")
-
-    user_tags = list(df["Replying to"]) 
-
+    user_tags = []
     mention_re = "(^|[^@\w])@(\w{1,15})"
 
-    for tweet in df["Tweet"]:
-        mentions = re.findall(mention_re, tweet)
-        for _, tag in mentions:
-            tag = '@' + tag
-            user_tags.append(tag)
-
+    for col in columns:
+        for ele in dataframe[col]:
+            mentions = re.findall(mention_re, ele)
+            for _, tag in mentions:
+                tag = '@' + tag
+                user_tags.append(tag)
     user_tags = np.unique(user_tags)
 
     dummy_tags = []
@@ -27,9 +24,19 @@ if __name__ == "__main__":
     for tag, dummy in zip(user_tags, dummy_tags):
         user_tag_dict[tag] = dummy
 
-    new_tweets = list(df["Tweet"])
-    for idx in range(len(new_tweets)):
+    for col in columns:
+        new_list = list(dataframe[col])
         for tag, dummy in user_tag_dict.items():
-            new_tweets[idx] = new_tweets[idx].replace(tag, dummy)
+            for idx in range(len(dataframe)):
+                new_list[idx] = new_list[idx].replace(tag, dummy)
+        dataframe[col] = new_list
 
-    print(new_tweets)
+    return dataframe
+
+
+if __name__ == "__main__":
+
+    df = pd.read_csv("tweet_comments.csv")
+    df = replace_tags(dataframe=df, columns=["Replying to", "Tweet"])
+    print(df["Tweet"])
+
