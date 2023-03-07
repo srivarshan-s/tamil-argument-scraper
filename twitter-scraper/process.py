@@ -38,6 +38,7 @@ if __name__ == "__main__":
 
     df = pd.read_csv("tweet_comments.csv")
 
-    df = replace_tags(dataframe=df, columns=["Replying to", "Tweet", "Parent Tweet"])
-    
+    df = replace_tags(dataframe=df, columns=[
+                      "Replying to", "Tweet", "Parent Tweet"])
+
     print(df)
