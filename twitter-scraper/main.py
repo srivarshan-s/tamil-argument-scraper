@@ -77,19 +77,13 @@ for url, topic, main_tweet in zip(urls, topics, main_tweets):
                     text = item.find_element(By.XPATH, './/div[@data-testid="tweetText"]').text
                 except:
                     text = '[empty]'
-
-                try:
-                    replying_to = item.find_element(By.XPATH, './/div[contains(text(), "Replying to")]//a').text
-                except:
-                    replying_to = '[empty]'
-                    continue
-            
+                
                 #Append new tweets replies to tweet array
                 if text == "" or text == "[empty]":
                     continue
                 if " · " in date:
                     continue
-                tweets.append([replying_to, text, date, topic, main_tweet])
+                tweets.append([text, date, topic, main_tweet])
                     
                 if (last_elem == current_elem):
                     result = True
@@ -107,12 +101,12 @@ for url, topic, main_tweet in zip(urls, topics, main_tweets):
 
 if os.path.isfile("./tweet_comments.csv"):
     df = pd.read_csv("./tweet_comments.csv")
-    df_new = pd.DataFrame(tweets, columns=["Replying to", "Tweet", "Date of Tweet", "Topic", "Parent Tweet"])
+    df_new = pd.DataFrame(tweets, columns=["Tweet", "Date of Tweet", "Topic", "Parent Tweet"])
     df = pd.concat([df, df_new], ignore_index = True)
     df.reset_index()
 
 else:
-    df = pd.DataFrame(tweets, columns=["Replying to", "Tweet", "Date of Tweet", "Topic", "Parent Tweet"])
+    df = pd.DataFrame(tweets, columns=["Tweet", "Date of Tweet", "Topic", "Parent Tweet"])
     
 df = df.drop_duplicates()
 df.to_csv("tweet_comments.csv", index=False, encoding="utf-8")
