@@ -133,3 +133,4 @@ dmypy.json
 LICENSE.chromedriver
 chromedriver
 chromedriver.backup
+temp.csv
