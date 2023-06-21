@@ -9,4 +9,6 @@ RUN mkdir /workdir
 WORKDIR /workdir
 
 # Install R packages
-RUN apt-get install r-cran-readxl -y
+RUN R -e 'install.packages("readxl")'
+RUN R -e 'install.packages("rhoR")'
+RUN R -e 'install.packages("irr")'
