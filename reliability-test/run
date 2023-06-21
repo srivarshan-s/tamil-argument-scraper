@@ -1,1 +1,1 @@
-docker run -v "$PWD:/workdir" -it --rm r-reliability-img
+docker run -v "$PWD:/workdir" -it --rm r-reliability-img bash
