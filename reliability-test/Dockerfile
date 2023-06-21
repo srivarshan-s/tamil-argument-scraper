@@ -1,16 +1,12 @@
-FROM almalinux:9
+FROM r-base:4.3.1
 
 # Update the image
-RUN dnf update -y
-
-# Add EPEL repo
-RUN dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm -y
-RUN dnf config-manager --set-enabled crb
-RUN dnf update -y
+RUN apt-get update
+RUN apt-get upgrade -y
 
 # Create work directory
 RUN mkdir /workdir
 WORKDIR /workdir
 
-# Install R
-RUN dnf install R -y
+# Install R packages
+RUN apt-get install r-cran-readxl -y
