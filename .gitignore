@@ -135,3 +135,5 @@ chromedriver
 chromedriver.backup
 temp.csv
 *.backup
+tests.txt
+tests.xlsx
