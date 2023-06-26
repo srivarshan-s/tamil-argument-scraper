@@ -119,7 +119,7 @@ cohen_kappa <- function(col1, col2) {
 
 # Read rater codings
 coder_1_data <- read_excel("./coder_1.xlsx")
-coder_2_data <- read_excel("./coder_2.xlsx")
+coder_2_data <- read_excel("./coder_3.xlsx")
 
 # Rename column names
 new_colnames <- c(
