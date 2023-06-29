@@ -1,9 +1,9 @@
 # Import libraries
 
-library("readxl")   # Package to read excel files
-library("rhoR")     # Package to calculate Shaffer’s rho
-library("irr")      # Package to calculate Krippendorff’s Alpha
-library("tibble")   
+library("readxl") # Package to read excel files
+library("rhoR") # Package to calculate Shaffer’s rho
+library("irr") # Package to calculate Krippendorff’s Alpha
+library("tibble")
 
 
 ###############################################################################
@@ -82,8 +82,12 @@ shaffer_rho <- function(col1, col2) {
     na_df <- rm_corr_na(col1, col2)
     col1 <- na_df$a
     col2 <- na_df$b
-    if (length(unique(col1)) > 2) {
-        return("NaN")
+    if (length(unique(col1)) == 1 && length(unique(col2)) == 1) {
+        if (col1[1] == col2[1]) {
+            return(1)
+        } else {
+            return("NaN")
+        }
     }
     concat_col <- encode(c(col1, col2))
     concat_col <- split_in_2(concat_col)
@@ -99,8 +103,12 @@ cohen_kappa <- function(col1, col2) {
     na_df <- rm_corr_na(col1, col2)
     col1 <- na_df$a
     col2 <- na_df$b
-    if (length(unique(col1)) > 2) {
-        return("NaN")
+    if (length(unique(col1)) == 1 && length(unique(col2)) == 1) {
+        if (col1[1] == col2[1]) {
+            return(1)
+        } else {
+            return("NaN")
+        }
     }
     concat_col <- encode(c(col1, col2))
     concat_col <- split_in_2(concat_col)
@@ -118,14 +126,14 @@ cohen_kappa <- function(col1, col2) {
 # Main code
 
 # Read rater codings
-coder_1_data <- read_excel("./coder_1.xlsx")
-coder_2_data <- read_excel("./coder_3.xlsx")
+coder_1_data <- read_excel("./coding_Sujith_test.xlsx")
+coder_2_data <- read_excel("./coding_Sri_test.xlsx")
 
 # Rename column names
 new_colnames <- c(
     "S.No", "Tweet", "Date.Of.Tweet", "Topic", "Parent.Tweet", "Language",
-    "Quality", "Agreement", "Disagreement", "Deep.Argumentation",
-    "Shallow.Argumentation", "Tone", "Writer.Character", "Remark", "Relevancy"
+    "Quality", "Stance", "Deep.Argumentation", "POV", "Tone",
+    "Writer.Character", "Remark", "Relevancy"
 )
 colnames(coder_1_data) <- new_colnames
 colnames(coder_2_data) <- new_colnames
@@ -142,7 +150,6 @@ for (col in colnames(coder_1_data)) {
     cat(col, "\n")
     # Print Krippendorff’s Alpha
     cat("Krippendorff’s Alpha:")
-    # Print Shaffer's Rho
     cat(kripp_alpha(coder_1_data[[col]], coder_2_data[[col]]), "\n")
     # Print Shaffer's Rho
     cat("Shaffer's Rho:")
