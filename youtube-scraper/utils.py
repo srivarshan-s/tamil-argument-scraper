@@ -21,8 +21,12 @@ def process_text(text: str) -> str:
 
 def save_to_csv(dict_obj: dict, file_path: str) -> None:
     save_df: pd.DataFrame = pd.DataFrame(dict_obj)
+    file_path_split: list[str] = file_path.split(".")
+    file_path_raw: str = "".join(file_path_split[:-1]) + "_raw." + file_path_split[-1]
+    save_df.to_csv(file_path_raw)
     save_df["Comment"] = save_df["Comment"].apply(process_text)
-    save_df.to_csv(file_path)
+    file_path_processed: str = "".join(file_path_split[:-1]) + "_processed." + file_path_split[-1]
+    save_df.to_csv(file_path_processed)
 
 def get_video_comments(id: str, api_obj: build) -> list[str]:
     try:
