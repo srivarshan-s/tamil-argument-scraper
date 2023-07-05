@@ -41,7 +41,7 @@ def get_video_comments(id: str, api_obj: build) -> list[str]:
                 part='snippet',
                 videoId=id,
                 pageToken=next_page_token,
-                maxResults=100
+                # maxResults=100
             ).execute()
 
             # Extract the comments from the response
