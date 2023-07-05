@@ -23,8 +23,14 @@ def main() -> None:
     save_dict["Comment"]: list = []
     
     for url, topic in zip(video_urls, video_topics):
-        video_id: str = parse_qs(urlparse(url).query)['v'][0]
         print("URL:", url)
+        if "shorts" in url:
+            video_id: str = url.split("/")[-1]
+        elif "watch" in url:
+            video_id: str = url.split("=")[-1]
+        else:
+            print("ERROR: url is neither a video nor a short!")
+        # video_id: str = parse_qs(urlparse(url).query)['v'][0]
         comments: list[str] = get_video_comments(id=video_id, api_obj=youtube)
         for comment in comments:
             save_dict["Video.URL"].append(url)
