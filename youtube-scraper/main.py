@@ -3,10 +3,14 @@ from googleapiclient.discovery import build
 from urllib.parse import urlparse, parse_qs
 
 def main() -> None:
+    # Get the API key
     API_KEY: str = get_api_key(file_path="api_key.txt")
+    # Define the service
     API_SERVICE_NAME: str = "youtube"
+    # Define the API version
     API_VERSION: str = "v3"
 
+    # Instantiate the YouTube API
     youtube: build = build(API_SERVICE_NAME, API_VERSION, developerKey=API_KEY)
 
     video_urls: list[str] = []
