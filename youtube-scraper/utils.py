@@ -10,6 +10,7 @@ def get_api_key(file_path: str) -> str:
 
 def read_urls(file_path: str) -> Tuple[list[str], list[str]]:
     url_df: pd.DataFrame = pd.read_csv(file_path)
+    url_df = url_df.drop_duplicates()
     urls: list[str] = list(url_df["Video.URL"])
     topics: list[str] = list(url_df["Video.URL"])
     return (urls, topics)
@@ -22,6 +23,7 @@ def process_text(text: str) -> str:
 
 def save_to_csv(dict_obj: dict, file_path: str) -> None:
     save_df: pd.DataFrame = pd.DataFrame(dict_obj)
+    save_df = save_df.drop_duplicates()
     file_path_split: list[str] = file_path.split(".")
     file_path_raw: str = "".join(file_path_split[:-1]) + "_raw." + file_path_split[-1]
     save_df.to_csv(file_path_raw)
