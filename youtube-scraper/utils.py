@@ -17,6 +17,7 @@ def read_urls(file_path: str) -> Tuple[list[str], list[str]]:
 def process_text(text: str) -> str:
     text = text.replace("&#39;", "'")
     text = text.replace("&amp;", "&")
+    text = text.replace("&quot;", '"')
     return text
 
 def save_to_csv(dict_obj: dict, file_path: str) -> None:
