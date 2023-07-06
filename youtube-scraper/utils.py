@@ -55,7 +55,8 @@ def get_video_comments(id: str, api_obj: build) -> list[str]:
 
             # Extract the comments from the response
             for item in response['items']:
-                comment = item['snippet']['topLevelComment']['snippet']['textDisplay']
+                topLevelComment = item['snippet']['topLevelComment']
+                comment = topLevelComment['snippet']['textDisplay']
                 comments.append(comment)
 
             # Check if there are more comment threads to retrieve
