@@ -14,7 +14,7 @@ def read_urls(file_path: str) -> Tuple[list[str], list[str]]:
     url_df: pd.DataFrame = pd.read_csv(file_path)
     url_df = url_df.drop_duplicates()
     urls: list[str] = list(url_df["Video.URL"])
-    topics: list[str] = list(url_df["Video.URL"])
+    topics: list[str] = list(url_df["Topic"])
     return (urls, topics)
 
 
