@@ -3,10 +3,12 @@ from googleapiclient.errors import HttpError
 import pandas as pd
 from typing import Tuple
 
+
 def get_api_key(file_path: str) -> str:
     with open(file_path, "r") as f:
         api_key: str = f.read()
     return api_key
+
 
 def read_urls(file_path: str) -> Tuple[list[str], list[str]]:
     url_df: pd.DataFrame = pd.read_csv(file_path)
@@ -15,21 +17,26 @@ def read_urls(file_path: str) -> Tuple[list[str], list[str]]:
     topics: list[str] = list(url_df["Video.URL"])
     return (urls, topics)
 
+
 def process_text(text: str) -> str:
     text = text.replace("&#39;", "'")
     text = text.replace("&amp;", "&")
     text = text.replace("&quot;", '"')
     return text
 
+
 def save_to_csv(dict_obj: dict, file_path: str) -> None:
     save_df: pd.DataFrame = pd.DataFrame(dict_obj)
     save_df = save_df.drop_duplicates()
     file_path_split: list[str] = file_path.split(".")
-    file_path_raw: str = "".join(file_path_split[:-1]) + "_raw." + file_path_split[-1]
+    file_path_raw: str = "".join(
+        file_path_split[:-1]) + "_raw." + file_path_split[-1]
     save_df.to_csv(file_path_raw)
     save_df["Comment"] = save_df["Comment"].apply(process_text)
-    file_path_processed: str = "".join(file_path_split[:-1]) + "_processed." + file_path_split[-1]
+    file_path_processed: str = "".join(
+        file_path_split[:-1]) + "_processed." + file_path_split[-1]
     save_df.to_csv(file_path_processed)
+
 
 def get_video_comments(id: str, api_obj: build) -> list[str]:
     try:
